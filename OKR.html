@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        .Edit {
+            display: none;
+        }
+    </style>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js'></script>
+</head>
+
+<body>
+    <!-- https://www.cnblogs.com/zhangliang88/p/5468840.html -->
+    <header><button id="ChangeEdit">編輯</button></header>
+    <main>
+        <ul>
+            <li>
+                <label for="ObjectiveValue">Objective：</label>
+                <input type="text" id="ObjectiveValue" disabled>
+                <!-- https://blog.csdn.net/lxf512666/article/details/52878621 -->
+                <!-- https://www.wibibi.com/info.php?tid=384 -->
+                <!-- https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_onkeypress -->
+                <input id="Objective" onkeyup="$('#ObjectiveValue').val($('#Objective').val());" type="text" name="Edit" class="Edit">
+            </li>
+            <hr>
+            <ul>
+                <li>
+                    <label for="KeyResults">KeyResults：</label>
+                    <button type="text" id="KeyResults" onclick="$('#KeyResultsValue').append('<li>123</li>')">增加</button>
+                </li>
+                <ul id="KeyResultsValue">
+
+                </ul>
+            </ul>
+        </ul>
+    </main>
+    <script>
+        // https://www.runoob.com/jquery/event-on.html
+        $('#ChangeEdit').on("click", function() {
+            if ($('input[name="Edit"]').attr("style") == "display:inline-block") {
+                $('input[name="Edit"]').attr("style", "display:none")
+            } else {
+                $('input[name="Edit"]').attr("style", "display:inline-block")
+            }
+        });
+        // .attr("display", "black")
+    </script>
+</body>
+
+</html>
