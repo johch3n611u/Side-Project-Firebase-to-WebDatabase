@@ -9,49 +9,82 @@
         * {
             box-sizing: border-box;
         }
-        
+
+        html {
+            padding: 3% 3% 3% 3%;
+        }
+
         .Edit {
             display: none;
         }
     </style>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js'></script>
+    <link rel='stylesheet'
+        href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css' />
 </head>
 
-<body>
-    <!-- https://www.cnblogs.com/zhangliang88/p/5468840.html -->
-    <header><button id="ChangeEdit">編輯</button></header>
-    <main>
-        <ul>
-            <li>
-                <label for="ObjectiveValue">Objective：</label>
-                <input type="text" id="ObjectiveValue" disabled>
-                <!-- https://blog.csdn.net/lxf512666/article/details/52878621 -->
-                <!-- https://www.wibibi.com/info.php?tid=384 -->
-                <!-- https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_onkeypress -->
-                <input id="Objective" onkeyup="$('#ObjectiveValue').val($('#Objective').val());" type="text" name="Edit" class="Edit">
-            </li>
-            <hr>
+<body class="row">
+    <aside class="col-4">
+        <h2>OKR</h2>
+        <hr>
+        <!-- https://www.cnblogs.com/zhangliang88/p/5468840.html -->
+        <header><button id="ChangeEdit">編輯</button></header>
+        <main>
             <ul>
                 <li>
-                    <label for="KeyResults">KeyResults：</label>
-                    <button type="text" id="KeyResults" onclick="$('#KeyResultsValue').append('<li>123</li>')">增加</button>
+                    <label for="ObjectiveValue">Objective：</label>
+                    <input type="text" id="ObjectiveValue" disabled>
+                    <!-- https://blog.csdn.net/lxf512666/article/details/52878621 -->
+                    <!-- https://www.wibibi.com/info.php?tid=384 -->
+                    <!-- https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_onkeypress -->
+                    <input id="Objective" onkeyup="$('#ObjectiveValue').val($('#Objective').val());" type="text"
+                        name="Edit" class="Edit">
                 </li>
-                <ul id="KeyResultsValue">
-
+                <hr>
+                <ul>
+                    <li>
+                        <label for="KeyResults">KeyResults：</label>
+                        <input id="KeyResultsInput" onkeyup="" type="text" name="Edit" class="Edit">
+                        <button type="text" id="KeyResults" onclick="addKeyResult()" name="Edit"
+                            class="Edit">增加</button>
+                        <button type="text" id="Clear" onclick="$('#KeyResultsInput').val('')" name="Edit"
+                            class="Edit">清除</button>
+                    </li>
+                    <ul id="KeyResultsValue">
+                    </ul>
                 </ul>
             </ul>
-        </ul>
-    </main>
+        </main>
+    </aside>
+    <article class="col-8">
+        <h2>KPI</h2>
+        <hr>
+    </article>
     <script>
         // https://www.runoob.com/jquery/event-on.html
-        $('#ChangeEdit').on("click", function() {
-            if ($('input[name="Edit"]').attr("style") == "display:inline-block") {
-                $('input[name="Edit"]').attr("style", "display:none")
+        $('#ChangeEdit').on("click", function () {
+            if ($('*[name="Edit"]').attr("style") == "display:inline-block") {
+                $('*[name="Edit"]').attr("style", "display:none")
             } else {
-                $('input[name="Edit"]').attr("style", "display:inline-block")
+                $('*[name="Edit"]').attr("style", "display:inline-block")
             }
         });
-        // .attr("display", "black")
+        var KR_index = 0;
+        function addKeyResult() {
+            var InputStatus = $('*[name="Edit"]').attr("style");
+            if (InputStatus == "display:inline-block") {
+                InputStatus = 'style="display:inline-block; margin-left:0.5%;" value="' + $('#KeyResultsInput').val() + '"';
+                InputStatus += ' onkeyup="';
+                InputStatus += "$('#pValue_" + KR_index + "').text($('#oValue_" + KR_index + "').val())" + '"';
+            } else {
+                InputStatus = 'class="Edit"';
+            }
+            var InputSet = "<input id='oValue_" + KR_index + "' type='text' name='Edit' " + InputStatus + ">"
+            var liSet = '<li><label style="padding-right:1%" id="pValue_' + KR_index + '">' + $('#KeyResultsInput').val() + "</label>" + InputSet + '</li>';
+            var htmlSet = liSet;
+            $('#KeyResultsValue').append(htmlSet);
+            KR_index++;
+        }
     </script>
 </body>
 
