@@ -9,26 +9,39 @@
         * {
             box-sizing: border-box;
         }
-
+        
         html {
             padding: 3% 3% 3% 3%;
         }
-
+        
         .Edit {
             display: none;
         }
+        
+        #ObjectiveValue {
+            color: red;
+        }
     </style>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js'></script>
-    <link rel='stylesheet'
-        href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css' />
+    <script src='https://momentjs.com/downloads/moment-with-locales.min.js'></script>
 </head>
 
-<body class="row">
+<body class="row" style="position: relative;">
     <aside class="col-4">
-        <h2>OKR</h2>
+        <div>
+            <h2 style="display: inline;">OKR</h2>
+            <span style="margin-left: 2%;">完成期限：</span>
+            <span id="ObjectiveDateView"></span>
+            <span style="margin-left: 2%;">完成百分比：</span>
+            <span id="CompleteView">20%</span>
+        </div>
         <hr>
         <!-- https://www.cnblogs.com/zhangliang88/p/5468840.html -->
-        <header><button id="ChangeEdit">編輯</button></header>
+        <header style="margin-bottom: 1%;">
+            <button id="ChangeEdit">編輯模式</button>
+            <input id="ObjectiveDate" type="date" name="Edit" class="Edit" value="2020-11-09">
+        </header>
         <main>
             <ul>
                 <li>
@@ -37,32 +50,57 @@
                     <!-- https://blog.csdn.net/lxf512666/article/details/52878621 -->
                     <!-- https://www.wibibi.com/info.php?tid=384 -->
                     <!-- https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_onkeypress -->
-                    <input id="Objective" onkeyup="$('#ObjectiveValue').val($('#Objective').val());" type="text"
-                        name="Edit" class="Edit">
+                    <input id="Objective" onkeyup="$('#ObjectiveValue').val($('#Objective').val());" type="text" name="Edit" class="Edit">
                 </li>
-                <hr>
                 <ul>
                     <li>
                         <label for="KeyResults">KeyResults：</label>
                         <input id="KeyResultsInput" onkeyup="" type="text" name="Edit" class="Edit">
-                        <button type="text" id="KeyResults" onclick="addKeyResult()" name="Edit"
-                            class="Edit">增加</button>
-                        <button type="text" id="Clear" onclick="$('#KeyResultsInput').val('')" name="Edit"
-                            class="Edit">清除</button>
+                        <button type="text" id="Clear" onclick="$('#KeyResultsInput').val('')" name="Edit" class="Edit">清除</button>
+                        <button type="text" id="KeyResults" onclick="addKeyResult()" name="Edit" class="Edit">增加</button>
                     </li>
                     <ul id="KeyResultsValue">
                     </ul>
                 </ul>
             </ul>
         </main>
+        <hr>
+        <footer>
+            <ul>
+                <li>上次登入時間：2020-11-13</li>
+                <li>上次編輯時間：2020-11-13</li>
+            </ul>
+        </footer>
     </aside>
     <article class="col-8">
         <h2>KPI</h2>
         <hr>
     </article>
     <script>
+        $(document).ready(function() {
+            const CompleteView = parseInt($('#CompleteView').text(), 10);
+            console.log('CompleteView', CompleteView);
+            if (CompleteView < 60) {
+                $('#CompleteView').attr('style', 'top:-8%;position:absolute;font-size:3em;color:red;');
+            } else if (60 < CompleteView && CompleteView < 70) {
+                $('#CompleteView').attr('style', 'top:-8%;position:absolute;font-size:3em;color:green;');
+            } else {
+                $('#CompleteView').attr('style', 'top:-8%;position:absolute;font-size:3em;color:blue;');
+            }
+            const CompleteDate = new Date($('#ObjectiveDate').val());
+            console.log("CompleteDate", CompleteDate);
+            // https://medium.com/@yuan.0708/moment-js-%E8%A8%88%E7%AE%97%E5%85%A9%E5%80%8B%E6%97%A5%E6%9C%9F%E7%9A%84%E5%B9%B4%E6%9C%88%E6%97%A5%E5%B7%AE%E7%95%B0-ac58c1245ecb
+            // if(){}else{}
+        });
+
+        $('#ObjectiveDate').attr('min', moment().format('yyyy-MM-DD'));
+        $('#ObjectiveDate').on('mouseout', function() {
+            $('#ObjectiveDateView').text($('#ObjectiveDate').val());
+        })
+
+
         // https://www.runoob.com/jquery/event-on.html
-        $('#ChangeEdit').on("click", function () {
+        $('#ChangeEdit').on("click", function() {
             if ($('*[name="Edit"]').attr("style") == "display:inline-block") {
                 $('*[name="Edit"]').attr("style", "display:none")
             } else {
@@ -70,6 +108,7 @@
             }
         });
         var KR_index = 0;
+
         function addKeyResult() {
             var InputStatus = $('*[name="Edit"]').attr("style");
             if (InputStatus == "display:inline-block") {
@@ -80,7 +119,7 @@
                 InputStatus = 'class="Edit"';
             }
             var InputSet = "<input id='oValue_" + KR_index + "' type='text' name='Edit' " + InputStatus + ">"
-            var liSet = '<li><label style="padding-right:1%" id="pValue_' + KR_index + '">' + $('#KeyResultsInput').val() + "</label>" + InputSet + '</li>';
+            var liSet = '<li><span style="padding-right:1%"><a href="#" id="pValue_' + KR_index + '">' + $('#KeyResultsInput').val() + "</a></span>" + InputSet + '</li>';
             var htmlSet = liSet;
             $('#KeyResultsValue').append(htmlSet);
             KR_index++;
