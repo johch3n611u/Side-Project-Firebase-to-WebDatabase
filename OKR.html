@@ -31,7 +31,7 @@
     <aside class="col-4">
         <div>
             <h2 style="display: inline;">OKR</h2>
-            <span style="margin-left: 2%;">完成期限：</span>
+            <span id="TimeOut" style="margin-left: 2%;">完成期限：</span>
             <span id="ObjectiveDateView"></span>
             <span style="margin-left: 2%;">完成百分比：</span>
             <span id="CompleteView">20%</span>
@@ -78,6 +78,7 @@
     </article>
     <script>
         $(document).ready(function() {
+            // 解析百分比渲染顯示
             const CompleteView = parseInt($('#CompleteView').text(), 10);
             console.log('CompleteView', CompleteView);
             if (CompleteView < 60) {
@@ -87,26 +88,59 @@
             } else {
                 $('#CompleteView').attr('style', 'top:-8%;position:absolute;font-size:3em;color:blue;');
             }
-            const CompleteDate = new Date($('#ObjectiveDate').val());
-            console.log("CompleteDate", CompleteDate);
-            // https://medium.com/@yuan.0708/moment-js-%E8%A8%88%E7%AE%97%E5%85%A9%E5%80%8B%E6%97%A5%E6%9C%9F%E7%9A%84%E5%B9%B4%E6%9C%88%E6%97%A5%E5%B7%AE%E7%95%B0-ac58c1245ecb
-            // if(){}else{}
         });
 
+        // 解析期限渲染顯示
+        $('#ObjectiveDate').on('change', function() {
+            const CompleteDate = new Date($('#ObjectiveDate').val());
+            //console.log("CompleteDate", CompleteDate);
+            // https://medium.com/@yuan.0708/moment-js-%E8%A8%88%E7%AE%97%E5%85%A9%E5%80%8B%E6%97%A5%E6%9C%9F%E7%9A%84%E5%B9%B4%E6%9C%88%E6%97%A5%E5%B7%AE%E7%95%B0-ac58c1245ecb
+            if (CompleteDate != "" || CompleteDate != null || CompleteDate != undefined) {
+                // console.log("CompleteDate", CompleteDate);
+                // $('#ObjectiveDate').attr('style', 'display:none;');
+                const DateNow = new Date();
+                const CountValue = CountDate(DateNow, CompleteDate);
+                //console.log(CountValue);
+                console.log('0', CountValue);
+                if (CountValue[0] <= 0 && CountValue[1] <= 0 && CountValue[2] <= 0) {
+                    $('#TimeOut').text('超時').attr('style', 'color:red;margin-left: 2%;');
+                    $('#ObjectiveDateView').attr('style', 'color:red;');
+                    console.log('1', CountValue);
+                } else if (CountValue[0] <= 0 && CountValue[1] <= 0 && 0 < CountValue[2] && CountValue[2] < 5) {
+                    $('#TimeOut').text('期限接近中：').attr('style', 'color:red;margin-left: 2%;');
+                    $('#ObjectiveDateView').attr('style', 'color:red;');
+                    console.log('2', CountValue);
+                } else {
+                    $('#TimeOut').text('完成期限：').attr('style', 'color:black;margin-left: 2%;');
+                    $('#ObjectiveDateView').attr('style', 'color:black;');
+                    console.log('3', CountValue);
+                }
+            } else {
+                // console.log("CompleteDate", CompleteDate);
+                const CountValue = CountDate(DateNow, CompleteDate);
+                // console.log(CountValue);
+            }
+        })
+
+        // 限制最小選擇日為當天之前
         $('#ObjectiveDate').attr('min', moment().format('yyyy-MM-DD'));
+        // 期限 input 渲染期限顯示
         $('#ObjectiveDate').on('mouseout', function() {
             $('#ObjectiveDateView').text($('#ObjectiveDate').val());
         })
 
-
-        // https://www.runoob.com/jquery/event-on.html
+        // 編輯模式開關
         $('#ChangeEdit').on("click", function() {
+            // https://www.runoob.com/jquery/event-on.html
             if ($('*[name="Edit"]').attr("style") == "display:inline-block") {
-                $('*[name="Edit"]').attr("style", "display:none")
+                $('*[name="Edit"]').attr("style", "display:none");
+
             } else {
-                $('*[name="Edit"]').attr("style", "display:inline-block")
+                $('*[name="Edit"]').attr("style", "display:inline-block");
             }
         });
+
+        // 渲染OKR畫面
         var KR_index = 0;
 
         function addKeyResult() {
@@ -123,6 +157,26 @@
             var htmlSet = liSet;
             $('#KeyResultsValue').append(htmlSet);
             KR_index++;
+        }
+
+        // 計算時間
+        function CountDate(StartDate, EndDate) {
+            const startDate = moment(StartDate);
+            const endDate = moment(EndDate);
+            // 計算兩者差異年數
+            const years = endDate.diff(startDate, 'years');
+            // 計算兩者差異月數，這邊要扣掉上面計算的差異年，否則會得到12個月
+            const months = endDate.diff(startDate, 'months') - (years * 12);
+            // 把差異的年、月數加回來，否則會變成計算起訖日相差的天數(365天)
+            startDate.add(years, 'years').add(months, 'months');
+            const days = endDate.diff(startDate, 'days');
+            //console.log('years = ', years); // 1
+            //console.log('months = ', months); // 0
+            //console.log('days = ', days); // 0
+            // 若比較 2017-04-07 & 2018-10-06
+            // 則年月日差異 1y 5m 29d
+            const CountDateArray = [years, months, days];
+            return CountDateArray;
         }
     </script>
 </body>
