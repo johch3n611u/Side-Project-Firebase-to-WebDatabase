@@ -73,8 +73,19 @@
         </footer>
     </aside>
     <article class="col-8">
-        <h2>KPI</h2>
+        <h2 style="display: inline;">KPI</h2>
+        <h3 id="KPITitle" style="display: inline;margin-left: 3%;"></h3>
+        <details style="display: inline;margin-left: 3%;">
+            <summary>注意事項</summary>
+            <p style="margin-top: 2%;">KPA、KRA、KPI、BSC、SMART</p>
+            <p>S代表具體(Specific)，指績效考核要切中特定的工作指標，不能籠統；</p>
+            <p>M代表可度量(Measurable)，指績效指標是數量化或者行為化的，驗證這些績效指標的數據或者信息是可以獲得的；</p>
+            <p>A代表可實現(Attainable)，指績效指標在付出努力的情況下可以實現，避免設立過高或過低的目標；</p>
+            <p>R代表關聯性(Relevant)，指績效指標是與上級目標具明確的關聯性,最終與公司目標相結合；</p>
+            <p>T代表有時限(Time bound)，註重完成績效指標的特定期限。</p>
+        </details>
         <hr>
+        <button id="KPIChangeEdit">編輯模式</button>
     </article>
     <script>
         $(document).ready(function() {
@@ -153,7 +164,7 @@
                 InputStatus = 'class="Edit"';
             }
             var InputSet = "<input id='oValue_" + KR_index + "' type='text' name='Edit' " + InputStatus + ">"
-            var liSet = '<li><span style="padding-right:1%"><a href="#" id="pValue_' + KR_index + '">' + $('#KeyResultsInput').val() + "</a></span>" + InputSet + '</li>';
+            var liSet = '<li><span style="padding-right:1%"><a onclick="KPIinfo(' + "'" + $('#KeyResultsInput').val() + "'" + ');" href="#" id="pValue_' + KR_index + '">' + $('#KeyResultsInput').val() + "</a></span>" + InputSet + '</li>';
             var htmlSet = liSet;
             $('#KeyResultsValue').append(htmlSet);
             KR_index++;
@@ -177,6 +188,11 @@
             // 則年月日差異 1y 5m 29d
             const CountDateArray = [years, months, days];
             return CountDateArray;
+        }
+
+        // KPI細節
+        function KPIinfo(Title) {
+            $('#KPITitle').text(Title);
         }
     </script>
 </body>
