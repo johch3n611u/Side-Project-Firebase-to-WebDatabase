@@ -163,8 +163,9 @@
             } else {
                 InputStatus = 'class="Edit"';
             }
-            var InputSet = "<input id='oValue_" + KR_index + "' type='text' name='Edit' " + InputStatus + ">"
-            var liSet = '<li><span style="padding-right:1%"><a onclick="KPIinfo(' + "'" + $('#KeyResultsInput').val() + "'" + ');" href="#" id="pValue_' + KR_index + '">' + $('#KeyResultsInput').val() + "</a></span>" + InputSet + '</li>';
+            var InputSet = "<input id='oValue_" + KR_index + "' type='text' name='Edit' " + InputStatus + ">";
+            var LevelBtn = "<button id='Level_" + KR_index + "' name='Edit' onclick='cutLevel(this)'>▲</button><button id='Level_" + KR_index + "' name='Edit' onclick='addLevel(this)'>▼</button>"
+            var liSet = '<li name="okLevel" id="okLevel_' + KR_index + '"><span style="padding-right:1%"><a onclick="KPIinfo();" href="#" id="pValue_' + KR_index + '">' + $('#KeyResultsInput').val() + "</a></span>" + InputSet + LevelBtn + '</li>';
             var htmlSet = liSet;
             $('#KeyResultsValue').append(htmlSet);
             KR_index++;
@@ -190,9 +191,18 @@
             return CountDateArray;
         }
 
+        //
+        function cutLevel(params) {
+            console.log(cutLevel, params.id);
+        }
+
+        function addLevel(params) {
+            console.log(cutLevel, params.id);
+        }
+
         // KPI細節
-        function KPIinfo(Title) {
-            $('#KPITitle').text(Title);
+        function KPIinfo() {
+
         }
     </script>
 </body>
