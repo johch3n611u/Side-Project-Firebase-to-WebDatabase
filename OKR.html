@@ -164,7 +164,7 @@
                 InputStatus = 'class="Edit"';
             }
             var InputSet = "<input id='oValue_" + KR_index + "' type='text' name='Edit' " + InputStatus + ">";
-            var LevelBtn = "<button id='Level_" + KR_index + "' name='Edit' onclick='cutLevel(this)'>▲</button><button id='Level_" + KR_index + "' name='Edit' onclick='addLevel(this)'>▼</button>"
+            var LevelBtn = "<button id='Level_" + KR_index + "' name='Edit' onclick='cutLevel(this," + KR_index + ")'>▲</button><button id='Level_" + KR_index + "' name='Edit' onclick='addLevel(this," + KR_index + ")'>▼</button>"
             var liSet = '<li name="okLevel" id="okLevel_' + KR_index + '"><span style="padding-right:1%"><a onclick="KPIinfo();" href="#" id="pValue_' + KR_index + '">' + $('#KeyResultsInput').val() + "</a></span>" + InputSet + LevelBtn + '</li>';
             var htmlSet = liSet;
             $('#KeyResultsValue').append(htmlSet);
@@ -191,13 +191,19 @@
             return CountDateArray;
         }
 
-        //
-        function cutLevel(params) {
+        // Level 排序
+        function cutLevel(params, index) {
             console.log(cutLevel, params.id);
+            if (index != 0) {
+
+            }
         }
 
-        function addLevel(params) {
+        function addLevel(params, index) {
             console.log(cutLevel, params.id);
+            if (index != KR_index) {
+
+            }
         }
 
         // KPI細節
