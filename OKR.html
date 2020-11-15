@@ -152,7 +152,8 @@
         });
 
         // 渲染OKR畫面
-        var KR_index = 0;
+        var KR_index = $('*[name="okLevel"]').length;
+        console.log('KR_index', KR_index);
 
         function addKeyResult() {
             var InputStatus = $('*[name="Edit"]').attr("style");
@@ -164,7 +165,7 @@
                 InputStatus = 'class="Edit"';
             }
             var InputSet = "<input id='oValue_" + KR_index + "' type='text' name='Edit' " + InputStatus + ">";
-            var LevelBtn = "<button id='Level_" + KR_index + "' name='Edit' onclick='cutLevel(this," + KR_index + ")'>▲</button><button id='Level_" + KR_index + "' name='Edit' onclick='addLevel(this," + KR_index + ")'>▼</button>"
+            var LevelBtn = "<button id='Level_" + KR_index + "' name='Edit' onclick='cutLevel(this)'>▲</button><button id='Level_" + KR_index + "' name='Edit' onclick='addLevel(this)'>▼</button>"
             var liSet = '<li name="okLevel" id="okLevel_' + KR_index + '"><span style="padding-right:1%"><a onclick="KPIinfo();" href="#" id="pValue_' + KR_index + '">' + $('#KeyResultsInput').val() + "</a></span>" + InputSet + LevelBtn + '</li>';
             var htmlSet = liSet;
             $('#KeyResultsValue').append(htmlSet);
@@ -192,17 +193,36 @@
         }
 
         // Level 排序
-        function cutLevel(params, index) {
-            console.log(cutLevel, params.id);
+        function cutLevel(params) {
+            // https://stackoverflow.com/questions/10260667/jquery-get-parent-parent-id
+            // https://www.fooish.com/javascript/string/replace.html
+            // console.log($("#" + params.id).parent().attr('id'));
+            var ParentId = $("#" + params.id).parent().attr('id');
+            console.log("ParentId", ParentId);
+            var index = ParentId.replace('okLevel_', '');
+            index = parseInt(index, 10);
+            console.log("index", index);
             if (index != 0) {
+                var NowLevel = $("#okLevel_" + index).html();
+                var Computeindex = index - 1;
+                var ComputeLevel = $("#okLevel_" + Computeindex).html();
 
+                $("#okLevel_" + index).html(ComputeLevel);
+                $("#okLevel_" + Computeindex).html(NowLevel);
             }
         }
 
-        function addLevel(params, index) {
-            console.log(cutLevel, params.id);
+        function addLevel(params) {
+            var ParentId = $("#" + params.id).parent().attr('id');
+            var index = ParentId.replace('okLevel_', '');
+            index = parseInt(index, 10);
             if (index != KR_index) {
+                var NowLevel = $("#okLevel_" + index).html();
+                var Computeindex = index + 1;
+                var ComputeLevel = $("#okLevel_" + Computeindex).html();
 
+                $("#okLevel_" + index).html(ComputeLevel);
+                $("#okLevel_" + Computeindex).html(NowLevel);
             }
         }
 
