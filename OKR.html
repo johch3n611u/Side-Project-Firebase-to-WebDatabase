@@ -9,21 +9,22 @@
         * {
             box-sizing: border-box;
         }
-        
+
         html {
             padding: 3% 3% 3% 3%;
         }
-        
+
         .Edit {
             display: none;
         }
-        
+
         #ObjectiveValue {
             color: red;
         }
     </style>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js'></script>
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css' />
+    <link rel='stylesheet'
+        href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css' />
     <script src='https://momentjs.com/downloads/moment-with-locales.min.js'></script>
 </head>
 
@@ -50,14 +51,17 @@
                     <!-- https://blog.csdn.net/lxf512666/article/details/52878621 -->
                     <!-- https://www.wibibi.com/info.php?tid=384 -->
                     <!-- https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_onkeypress -->
-                    <input id="Objective" onkeyup="$('#ObjectiveValue').val($('#Objective').val());" type="text" name="Edit" class="Edit">
+                    <input id="Objective" onkeyup="$('#ObjectiveValue').val($('#Objective').val());" type="text"
+                        name="Edit" class="Edit">
                 </li>
                 <ul>
                     <li>
                         <label for="KeyResults">KeyResults：</label>
                         <input id="KeyResultsInput" onkeyup="" type="text" name="Edit" class="Edit">
-                        <button type="text" id="Clear" onclick="$('#KeyResultsInput').val('')" name="Edit" class="Edit">清除</button>
-                        <button type="text" id="KeyResults" onclick="addKeyResult()" name="Edit" class="Edit">增加</button>
+                        <button type="text" id="Clear" onclick="$('#KeyResultsInput').val('')" name="Edit"
+                            class="Edit">清除</button>
+                        <button type="text" id="KeyResults" onclick="addKeyResult()" name="Edit"
+                            class="Edit">增加</button>
                     </li>
                     <ul id="KeyResultsValue">
                     </ul>
@@ -85,10 +89,26 @@
             <p>T代表有時限(Time bound)，註重完成績效指標的特定期限。</p>
         </details>
         <hr>
-        <button id="KPIChangeEdit">編輯模式</button>
+        <button id="KPIChangeEdit" onclick="KPIAdd(this)">新增項目</button><input type="text" placeholder="項目">
+        <ul>
+
+        </ul>
     </article>
     <script>
-        $(document).ready(function() {
+        function KPIAdd(tag) {
+            var litag = `<li>
+                                        <span>123</span><input type="checkbox">
+                                        <button onclick="KPIAdd(this)">新增子項目</button><input type="text" placeholder="子項目">
+                                        <ul></ul>
+                             </li>`;
+            $(tag).next().next().append(litag);
+            // https://stackoverflow.com/questions/34494873/why-is-my-jquery-selector-returning-a-n-fn-init0-and-what-is-it
+            console.log($(tag));
+            console.log($(tag).next().next());
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
             // 解析百分比渲染顯示
             const CompleteView = parseInt($('#CompleteView').text(), 10);
             console.log('CompleteView', CompleteView);
@@ -102,7 +122,7 @@
         });
 
         // 解析期限渲染顯示
-        $('#ObjectiveDate').on('change', function() {
+        $('#ObjectiveDate').on('change', function () {
             const CompleteDate = new Date($('#ObjectiveDate').val());
             //console.log("CompleteDate", CompleteDate);
             // https://medium.com/@yuan.0708/moment-js-%E8%A8%88%E7%AE%97%E5%85%A9%E5%80%8B%E6%97%A5%E6%9C%9F%E7%9A%84%E5%B9%B4%E6%9C%88%E6%97%A5%E5%B7%AE%E7%95%B0-ac58c1245ecb
@@ -136,12 +156,12 @@
         // 限制最小選擇日為當天之前
         $('#ObjectiveDate').attr('min', moment().format('yyyy-MM-DD'));
         // 期限 input 渲染期限顯示
-        $('#ObjectiveDate').on('mouseout', function() {
+        $('#ObjectiveDate').on('mouseout', function () {
             $('#ObjectiveDateView').text($('#ObjectiveDate').val());
         })
 
         // 編輯模式開關
-        $('#ChangeEdit').on("click", function() {
+        $('#ChangeEdit').on("click", function () {
             // https://www.runoob.com/jquery/event-on.html
             if ($('*[name="Edit"]').attr("style") == "display:inline-block") {
                 $('*[name="Edit"]').attr("style", "display:none");
