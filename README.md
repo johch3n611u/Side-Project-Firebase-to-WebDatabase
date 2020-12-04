@@ -4,6 +4,8 @@
 
 <https://basecamp.com/>
 
+slack trallor
+
 找到一個很類似的東西
 
 ## Firebase
