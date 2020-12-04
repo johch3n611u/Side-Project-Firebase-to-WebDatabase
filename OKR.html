@@ -95,16 +95,27 @@
         </ul>
     </article>
     <script>
+        // 增加項目
         function KPIAdd(tag) {
             var litag = `<li>
-                                        <span>123</span><input type="checkbox">
-                                        <button onclick="KPIAdd(this)">新增子項目</button><input type="text" placeholder="子項目">
-                                        <ul></ul>
+                                    <span>${$(tag).next().val()}</span><input type="checkbox" style="margin:0 1%" onclick="del(this)">
+                                    <button onclick="KPIAdd(this)">新增子項目</button><input type="text" placeholder="子項目">
+                                    <ul></ul>
                              </li>`;
             $(tag).next().next().append(litag);
             // https://stackoverflow.com/questions/34494873/why-is-my-jquery-selector-returning-a-n-fn-init0-and-what-is-it
             console.log($(tag));
             console.log($(tag).next().next());
+        }
+        // 刪除線
+        function del(tag) {
+            // text-decoration:line-through;
+            console.log($(tag).prev().css('text-decoration'));
+            if ($(tag).prev().css('text-decoration') == 'none solid rgb(33, 37, 41)') {
+                $(tag).prev().css('text-decoration', 'line-through');
+            } else {
+                $(tag).prev().css('text-decoration', 'none');
+            }
         }
     </script>
     <script>
