@@ -91,7 +91,6 @@
         <hr>
         <button id="KPIChangeEdit" onclick="KPIAdd(this)">新增項目</button><input type="text" placeholder="項目">
         <ul>
-
         </ul>
     </article>
     <script>
@@ -102,10 +101,12 @@
                                     <button onclick="KPIAdd(this)">新增子項目</button><input type="text" placeholder="子項目">
                                     <ul></ul>
                              </li>`;
+            // .parent()
+            console.log($(tag).parent());
             $(tag).next().next().append(litag);
             // https://stackoverflow.com/questions/34494873/why-is-my-jquery-selector-returning-a-n-fn-init0-and-what-is-it
-            console.log($(tag));
-            console.log($(tag).next().next());
+            // console.log($(tag));
+            // console.log($(tag).next().next());
         }
         // 刪除線
         function del(tag) {
