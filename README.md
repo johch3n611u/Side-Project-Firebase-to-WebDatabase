@@ -1,4 +1,14 @@
+# 20201204
 
+需求與進度卡在某個段落，所以決定把 firebase 嘗試串接後就先 close 做別的。
+
+<https://www.playpcesor.com/2012/09/workflowy.html>
+
+<https://basecamp.com/>
+
+slack trallor
+
+找到一個很類似的東西
 
 ## Firebase
 
