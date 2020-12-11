@@ -1,3 +1,7 @@
+# 20201211
+
+<https://www.zhihu.com/question/61532959>
+
 # 20201204
 
 需求與進度卡在某個段落，所以決定把 firebase 嘗試串接後就先 close 做別的。
