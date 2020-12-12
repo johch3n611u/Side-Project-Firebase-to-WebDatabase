@@ -4,7 +4,11 @@
 
 依照目前這個狀況要實作儲存與渲染會異常複雜...
 
-應該用 treejs 得到的靈感，先從資料結構搞起在依序做功能才會較簡單，
+應該用 treejs 得到的資訊，
+
+<https://ithelp.ithome.com.tw/questions/10199419>
+
+先從資料結構搞起在依序做功能才會較簡單，
 
 所以目前這個專案從 multiple child todolist 轉為 利用 firebase 做登入驗證，方便做後續其他系統。
 
