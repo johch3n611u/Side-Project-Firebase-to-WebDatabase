@@ -1,5 +1,13 @@
 # 20201211
 
+弊端出現了，也更了解為何需要前端框架將資料與功能做拆分...
+
+依照目前這個狀況要實作儲存與渲染會異常複雜...
+
+應該用 treejs 得到的靈感，先從資料結構搞起在依序做功能才會較簡單，所以目前這個專案就先到此，後續有時間再做。
+
+<https://www.google.com/search?sxsrf=ALeKk01oDDxqz9XcaBDp8NM8R2TLrtCatw%3A1607749066326&ei=yk3UX8C-E9HKmAXa-rbwAg&q=jstree&oq=jstree&gs_lcp=CgZwc3ktYWIQAzICCAAyAggAMgIIADICCAAyAggAMgIIADICCAAyAggAMgIIADICCAA6BAgAEAo6BQgAELEDOggIABCxAxCDAVC5SVjRVGCCWWgAcAB4AIABRIgBqQGSAQEzmAEAoAEBoAECqgEHZ3dzLXdpesABAQ&sclient=psy-ab&ved=0ahUKEwjAy_H_08ftAhVRJaYKHVq9DS4Q4dUDCA0&uact=5>
+
 <https://www.zhihu.com/question/61532959>
 
 # 20201204
