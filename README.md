@@ -8,6 +8,8 @@
 
 <https://ithelp.ithome.com.tw/questions/10199419>
 
+<https://www.twblogs.net/a/5c0a1e5abd9eee6fb37b69f2>
+
 先從資料結構搞起在依序做功能才會較簡單，
 
 所以目前這個專案從 multiple child todolist 轉為 利用 firebase 做登入驗證，方便做後續其他系統。
