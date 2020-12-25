@@ -24,6 +24,9 @@
 
 ![alt](/assets/filebase.png)
 
+1. 帳號申請
+2. script 載入
+
 ---
 
 ![alt](/assets/fail.png)
