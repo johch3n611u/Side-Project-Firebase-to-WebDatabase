@@ -15,6 +15,8 @@
          https://firebase.google.com/docs/web/setup#available-libraries -->
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-analytics.js"></script>
 
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
+
     <script>
         // Your web app's Firebase configuration
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -30,6 +32,7 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         firebase.analytics();
+        var db = firebase.database();
     </script>
     <script>
         // window.onbeforeunload = function (event) {
