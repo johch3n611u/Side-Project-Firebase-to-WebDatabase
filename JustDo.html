@@ -26,7 +26,7 @@
                 </tr>
                 <tr>
                     <td><label for="Password">Password</label></td>
-                    <td><input type="password" id="Password"></td>
+                    <td><input onkeyup="SignIn()" type="password" id="Password"></td>
                 </tr>
             </table>
         </form>
@@ -63,22 +63,30 @@
         // 初始化 Firebase
         var db = FireBaseBuilder()();
         $("#Send").on("click", function() {
-
-            let email = $("#Email").val();
-            console.log(email);
-            let password = $("#Password").val();
-            console.log(password);
-
-            firebase.auth().signInWithEmailAndPassword(email, password)
-                .then(() => {
-                    CheckSignedIn();
-                })
-                .catch((error) => {
-                    // `在註冊時，記得一定要有 catch 來處理錯誤，因為 Firebase 會檢查 Email 是否符合格式、或是密碼長度是否足夠...等等。`
-                    console.log(error.message);
-                    alert(error.message);
-                });
+            SignIn();
         });
+
+        function SignIn() {
+            // https://codertw.com/%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC/288706/
+            // https://www.w3schools.com/howto/howto_js_trigger_button_enter.asp
+            console.log(event);
+            if (event.keyCode == 13 || event.type == "click") {
+                let email = $("#Email").val();
+                console.log(email);
+                let password = $("#Password").val();
+                console.log(password);
+
+                firebase.auth().signInWithEmailAndPassword(email, password)
+                    .then(() => {
+                        CheckSignedIn();
+                    })
+                    .catch((error) => {
+                        // `在註冊時，記得一定要有 catch 來處理錯誤，因為 Firebase 會檢查 Email 是否符合格式、或是密碼長度是否足夠...等等。`
+                        console.log(error.message);
+                        alert(error.message);
+                    });
+            }
+        }
 
         // 確認登入狀態
         function CheckSignedIn() {
@@ -90,6 +98,7 @@
                 console.log("success");
                 $("#Login").attr("style", "display:none");
                 $("#SetData").attr("style", "position: absolute;top: 35%;left: 40%;display:block");
+
             } else {
                 // No user is signed in.
             }
@@ -101,6 +110,12 @@
                 // User is signed in.
                 $("#Login").attr("style", "display:none");
                 $("#SetData").attr("style", "position: absolute;top: 35%;left: 40%;display:block");
+                // 取得資料渲染
+                db.ref("data").on('value', function(snapshot) {
+                    var data = snapshot.val();
+                    console.log(data);
+                    $("#RealtimeData").text(JSON.stringify(data));
+                });
             } else {
                 // No user is signed in.
                 $("#Login").attr("style", "position: absolute;top: 35%;left: 40%;display:block");
@@ -108,31 +123,32 @@
             }
         });
 
-        // 取得資料渲染
-        db.ref("data").on('value', function(snapshot) {
-            var data = snapshot.val();
-            console.log(data);
-            $("#RealtimeData").text(JSON.stringify(data));
-        });
-
         // 儲存資料
         $("#Set").on("click", function() {
-            var data = JSON.parse($("#Data").val());
-            console.log(data);
-            db.ref("/data").set(data)
-                .then(function() {
-                    alert("建立成功");
-                }).catch(function() {
-                    alert("伺服器發生錯誤，請稍後再試");
-                });
+            SetData();
         });
 
-        // 跳出視窗前詢問框 (必須有對 window 做動作)
+        function SetData() {
+            var val = $("#Data").val();
+            console.log(val);
+            if (val != "") {
+                var data = JSON.parse(val);
+                db.ref("/data").set(data)
+                    .then(function() {
+                        alert("建立成功");
+                    }).catch(function() {
+                        alert("伺服器發生錯誤，請稍後再試");
+                    });
+            }
+        }
+
+        //跳出視窗前詢問框(必須有對 window 做動作)
         window.onbeforeunload = function(event) {
             var event = event || window.event;
             if (event) {
                 event.returnValue = '確定?';
             }
+            SetData();
             firebase.auth().signOut().then(function() {
                 var user = firebase.auth().currentUser;
                 if (user == null) {
