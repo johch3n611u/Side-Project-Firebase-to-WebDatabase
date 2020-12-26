@@ -282,6 +282,16 @@ EX: 使用 $student 來接收使用者寫入的人名，就算我們不知道那
 }
 ```
 
+20. 登出 <https://ithelp.ithome.com.tw/articles/10200185>
+
+```javascript
+firebase.auth().signOut().then(function() {
+    alert('已登出');
+    var user = firebase.auth().currentUser;
+    console.log(user)
+});
+```
+
 ### 原理
 
 * 必須引入所有包含 app 分析 database 驗證 等等的函式庫才可以正常使用 firebase
@@ -328,5 +338,3 @@ slack trallor
 ## MBO、KPI、OKR
 
 <https://www.google.com/search?q=MBO%E3%80%81KPI%E3%80%81OKR&oq=MBO%E3%80%81KPI%E3%80%81OKR&aqs=chrome..69i57.503j0j1&sourceid=chrome&ie=UTF-8>
-
-

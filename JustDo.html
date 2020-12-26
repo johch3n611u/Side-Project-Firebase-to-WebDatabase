@@ -42,8 +42,10 @@
                     <td><button id="Set" style="margin-left: 1%;" type="button">Set</button></td>
                 </tr>
             </table>
-            <textarea id="Data" rows="4" cols="50"></textarea>
+            <textarea placeholder="請輸入 JSON 格式..." id="Data" rows="4" cols="20"></textarea>
         </form>
+        <h2>實時數據</h2>
+        <p id="RealtimeData"></p>
     </div>
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
@@ -59,7 +61,7 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
     <script>
         // 初始化 Firebase
-        var InitializeDB = FireBaseBuilder()();
+        var db = FireBaseBuilder()();
         $("#Send").on("click", function() {
 
             let email = $("#Email").val();
@@ -107,14 +109,23 @@
         });
 
         // 取得資料渲染
-        function GetData(params) {
-
-        }
+        db.ref("data").on('value', function(snapshot) {
+            var data = snapshot.val();
+            console.log(data);
+            $("#RealtimeData").text(JSON.stringify(data));
+        });
 
         // 儲存資料
-        function SetData(params) {
-
-        }
+        $("#Set").on("click", function() {
+            var data = JSON.parse($("#Data").val());
+            console.log(data);
+            db.ref("/data").set(data)
+                .then(function() {
+                    alert("建立成功");
+                }).catch(function() {
+                    alert("伺服器發生錯誤，請稍後再試");
+                });
+        });
 
         // 跳出視窗前詢問框 (必須有對 window 做動作)
         window.onbeforeunload = function(event) {
@@ -122,6 +133,12 @@
             if (event) {
                 event.returnValue = '確定?';
             }
+            firebase.auth().signOut().then(function() {
+                var user = firebase.auth().currentUser;
+                if (user == null) {
+                    alert(確認已登出);
+                }
+            })
             return '確定?';
         }
     </script>
