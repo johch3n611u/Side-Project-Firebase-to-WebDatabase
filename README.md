@@ -128,7 +128,7 @@
   * 支援各大平台登入(Google、FB、Github...)
   * more...
 
-13.  平台開通 => 平台客制功能(驗證信內容/手動新增帳號...) => 程式碼
+13. 平台開通 => 平台客制功能(驗證信內容/手動新增帳號...) => 程式碼
 
 ```javascript
 // 註冊
@@ -190,13 +190,11 @@ user.updateProfile({
 
 ```
 
-
-
-1.   權限規則 `父層的規則會覆蓋過子層`
-      1. read: 限制讀取的權限
-      2. write 限制寫入的權限
-      3. validate: 資料驗證(ex: 要寫入的成績是不是在 0~100 之間)
-2.  auth: 登入狀態
+14. 權限規則 `父層的規則會覆蓋過子層`
+    1. read: 限制讀取的權限
+    2. write 限制寫入的權限
+    3. validate: 資料驗證(ex: 要寫入的成績是不是在 0~100 之間)
+15. auth: 登入狀態
 
 ```JSON
 {
@@ -207,10 +205,10 @@ user.updateProfile({
 }
 ```
 
-16.  指定路徑
-      1. root: 資料庫頂層
-      2. child: 可以指定路徑
-      3. exists(): 指定路徑之資料是否存在`e.g. chinese 成績中，是否存在 Tony 這個人 root.child("chinese/Tony").exists()`
+16. 指定路徑
+    1. root: 資料庫頂層
+    2. child: 可以指定路徑
+    3. exists(): 指定路徑之資料是否存在`e.g. chinese 成績中，是否存在 Tony 這個人 root.child("chinese/Tony").exists()`
 
 17. 資料
 
@@ -283,6 +281,13 @@ EX: 使用 $student 來接收使用者寫入的人名，就算我們不知道那
   }
 }
 ```
+
+### 原理
+
+* 必須引入所有包含 app 分析 database 驗證 等等的函式庫才可以正常使用 firebase
+* <https://stackoverflow.com/questions/40563140/error-no-firebase-app-default-has-been-created-call-firebase-app-initiali/49200816>
+* 必須利用 config 初始化 app，才能使用驗證，所以沒辦法把一些 config 存在雲上
+* 但可以利用 database role 去管控資料存取
 
 ---
 

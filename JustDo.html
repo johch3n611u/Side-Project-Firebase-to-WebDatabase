@@ -8,60 +8,123 @@
 </head>
 
 <body>
+    <div style="
+  position: absolute;
+  top: 35%;
+  left: 40%;" id="Login">
+        <form>
+            <table>
+                <tr>
+                    <td>
+                        <h2>Login</h2>
+                    </td>
+                    <td><button id="Send" style="margin-left: 1%;" type="button">Send</button></td>
+                </tr>
+                <tr>
+                    <td><label for="Email">Email</label></td>
+                    <td><input type="email" id="Email"></td>
+                </tr>
+                <tr>
+                    <td><label for="Password">Password</label></td>
+                    <td><input type="password" id="Password"></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <div style="display:none;" id="SetData">
+        <form>
+            <table>
+                <tr>
+                    <td>
+                        <h2>SetData</h2>
+                    </td>
+                    <td><button id="Set" style="margin-left: 1%;" type="button">Set</button></td>
+                </tr>
+            </table>
+            <textarea id="Data" rows="4" cols="50"></textarea>
+        </form>
+    </div>
+
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
-
     <!-- TODO: Add SDKs for Firebase products that you want to use
          https://firebase.google.com/docs/web/setup#available-libraries -->
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-analytics.js"></script>
-
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
-
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
+    <script src="/Environment.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
     <script>
-        // Your web app's Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-        var firebaseConfig = {
-            apiKey: "AIzaSyA0HTv4SIfnnbEptOuSnf8wmOGmgMJ0bgE",
-            authDomain: "justdo-1165.firebaseapp.com",
-            projectId: "justdo-1165",
-            storageBucket: "justdo-1165.appspot.com",
-            messagingSenderId: "865876645704",
-            appId: "1:865876645704:web:81d74f5362557c9cfcc57d",
-            measurementId: "G-XS9L7WPC9W"
-        };
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        firebase.analytics();
-        var db = firebase.database();
-    </script>
-    <script>
-        // window.onbeforeunload = function (event) {
-        //     var event = event || window.event;
-        //     if (event) {
-        //         event.returnValue = '確定?';
-        //     }
-        //     return '確定?';
-        // }
+        // 初始化 Firebase
+        var InitializeDB = FireBaseBuilder()();
+        $("#Send").on("click", function() {
 
+            let email = $("#Email").val();
+            console.log(email);
+            let password = $("#Password").val();
+            console.log(password);
+
+            firebase.auth().signInWithEmailAndPassword(email, password)
+                .then(() => {
+                    CheckSignedIn();
+                })
+                .catch((error) => {
+                    // `在註冊時，記得一定要有 catch 來處理錯誤，因為 Firebase 會檢查 Email 是否符合格式、或是密碼長度是否足夠...等等。`
+                    console.log(error.message);
+                    alert(error.message);
+                });
+        });
+
+        // 確認登入狀態
+        function CheckSignedIn() {
+            console.log("CheckSignedIn");
+            var user = firebase.auth().currentUser
+            console.log(user);
+            if (user != null) {
+                // User is signed in.
+                console.log("success");
+                $("#Login").attr("style", "display:none");
+                $("#SetData").attr("style", "position: absolute;top: 35%;left: 40%;display:block");
+            } else {
+                // No user is signed in.
+            }
+        }
+
+        // 實時確認登入狀態
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                // User is signed in.
+                $("#Login").attr("style", "display:none");
+                $("#SetData").attr("style", "position: absolute;top: 35%;left: 40%;display:block");
+            } else {
+                // No user is signed in.
+                $("#Login").attr("style", "position: absolute;top: 35%;left: 40%;display:block");
+                $("#SetData").attr("style", "display:none");
+            }
+        });
+
+        // 取得資料渲染
+        function GetData(params) {
+
+        }
+
+        // 儲存資料
+        function SetData(params) {
+
+        }
+
+        // 跳出視窗前詢問框 (必須有對 window 做動作)
+        window.onbeforeunload = function(event) {
+            var event = event || window.event;
+            if (event) {
+                event.returnValue = '確定?';
+            }
+            return '確定?';
+        }
     </script>
 </body>
 
 </html>
-
-<!-- 閉包 -->
-<!-- function outer() {
-var a = 10;
-function addNum(b) {
-a = a + 1;
-return a + b;
-}
-
-function addNum2(b) {
-a = a + 1;
-return a + b;
-}
-return addNum;
-}
-
-var myFun1 = outer();
-var myFun2 = outer(); -->
