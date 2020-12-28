@@ -16,7 +16,7 @@
 
 <https://www.twblogs.net/a/5c0a1e5abd9eee6fb37b69f2>
 
-先從資料結構搞起在依序做功能才會較簡單，
+先從資料結構搞起，在依序做功能才會較簡單，
 
 所以目前這個專案從 multiple child todolist 轉為 利用 firebase 做登入驗證，方便做後續其他系統。
 
@@ -26,7 +26,7 @@
 
 ## 步驟
 
-意外發現 firebase 還有提供驗證 api 毫不考慮直接試用捨棄原來 JWT 等需要再研究，
+意外發現 firebase 還有提供驗證 api 毫不考慮直接試用，捨棄原來 JWT，等需要再研究，
 
 ![alt](/assets/filebase.png)
 
