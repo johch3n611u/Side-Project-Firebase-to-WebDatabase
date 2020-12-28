@@ -1,5 +1,7 @@
 # 20201211
 
+![alt](/assets/firebaseInitialize.png)
+
 <https://medium.com/hulis-blog/frontend-engineer-guide-297821512f4e>
 
 可以參考上述文章概述了為何需要用哪些技術，在實作 GTD todolist 時也遇到類似問題，
