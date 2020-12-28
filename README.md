@@ -1,6 +1,8 @@
 # 20201211
 
-弊端出現了，功能增加 data 變複雜的狀況下 jq 開始難處理，也更了解為何需要前端框架將資料與功能做拆分...
+可以參考此篇文章概述了為何需要用哪些技術 <https://medium.com/hulis-blog/frontend-engineer-guide-297821512f4e> ，在實作 GTD todolist 時也遇到類似問題，
+
+功能增加 data 變複雜的狀況下 jq 開始難處理，也更了解為何需要前端框架將資料與功能做拆分...
 
 依照目前這個狀況 ( 單純用 jq select render ... Unlimited levels ) 要實作儲存與渲染會異常複雜...
 
