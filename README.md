@@ -1,3 +1,15 @@
+## 引言
+
+本項目原先想做一個以 OKR KPI 為主的 Todolist 來幫忙管理任務，
+
+單純用 jq select render 與一些功能，
+
+但在處理Unlimited levels 與功能協作時，
+
+遇到狀態管理不太好做的問題，打算從起專案用前端框架處理，
+
+此專案改為練習 Firebase 身分驗證與實時數據庫存取。
+
 # Firebase Employ
 
 * 20201211
