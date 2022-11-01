@@ -14,7 +14,7 @@
 
 * 20201211
 
-![alt](/assets/firebaseInitialize.png)
+<!-- [alt](/assets/firebaseInitialize.png) -->
 
 <https://medium.com/hulis-blog/frontend-engineer-guide-297821512f4e>
 
